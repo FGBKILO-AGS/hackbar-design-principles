@@ -1,19 +1,29 @@
 # 可复用组件 (Reusable Components)
 
-## 概述
+## 原始定义
 
-在 HackBar 中，我们设计了许多可复用的组件，以提高开发效率并保持界面一致性。这些组件遵循设计规范，可以在不同功能模块中重复使用。
+可复用组件是指在软件开发中可以多次使用而无需重复编写相同代码的组件。这些组件具有通用性、配置化和低耦合的特点，可以在不同场景下重复使用。
 
-## 核心思想
+## 详细解释
+
+可复用组件是现代前端开发中的重要概念，它强调通过设计通用的、可配置的组件来减少重复代码，提高开发效率。在 HackBar 项目中，我们设计了许多可复用的组件，以提高开发效率并保持界面一致性。
+
+### 核心概念
 
 1. **通用性**：组件设计考虑多种使用场景
 2. **配置化**：通过 props 提供灵活的配置选项
 3. **一致性**：遵循统一的设计风格和交互模式
 4. **低耦合**：组件不依赖具体业务逻辑
 
-## 代码示例
+### 在 HackBar 中的应用
 
-### 菜单组件
+在 HackBar 中，我们设计了许多可复用的组件，以提高开发效率并保持界面一致性。这些组件遵循设计规范，可以在不同功能模块中重复使用。
+
+## 实施步骤
+
+### 第一步：识别可复用元素
+
+首先需要识别用户界面中可以复用的元素，并抽象为组件。
 
 ```vue
 <!-- components/MenuEncoding.vue -->
@@ -62,7 +72,9 @@ const handleEncoding = (type: string) => {
 </script>
 ```
 
-### 对话框组件
+### 第二步：设计组件接口
+
+为组件设计清晰的接口，包括 props、events 和 slots。
 
 ```vue
 <!-- components/DialogCustomPayloadEdit.vue -->
@@ -111,13 +123,13 @@ const handleEncoding = (type: string) => {
 <script setup lang="ts">
 import { ref, reactive, watch } from 'vue';
 
-// Props 定义
+// Props 定义 - 组件输入接口
 const props = defineProps<{
   modelValue: boolean;
   payload?: CustomPayload;
 }>();
 
-// Emit 定义
+// Emit 定义 - 组件输出接口
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void;
   (e: 'save', payload: CustomPayload): void;
@@ -175,7 +187,9 @@ const savePayload = () => {
 </script>
 ```
 
-### 工具函数组件
+### 第三步：实现通用工具组件
+
+创建通用的工具组件，可以在多个地方复用。
 
 ```vue
 <!-- components/PrettyRawResponse.vue -->
@@ -239,6 +253,9 @@ const toggleFormat = () => {
 const copyResponse = () => {
   const { copy } = useClipboard();
   copy(props.response);
+  
+  // 显示复制成功提示
+  console.log('Response copied to clipboard');
 };
 </script>
 
@@ -259,6 +276,107 @@ pre {
   margin: 0;
   white-space: pre-wrap;
   word-wrap: break-word;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+  line-height: 1.4;
+}
+</style>
+```
+
+### 第四步：创建复合组件
+
+将多个基础组件组合成更复杂的复合组件。
+
+```vue
+<!-- components/RequestEditor.vue -->
+<template>
+  <div class="request-editor">
+    <v-tabs v-model="activeTab" fixed-tabs>
+      <v-tab value="basic">Basic</v-tab>
+      <v-tab value="raw">Raw</v-tab>
+    </v-tabs>
+    
+    <v-window v-model="activeTab">
+      <v-window-item value="basic">
+        <RequestPanelBasic 
+          v-model:request="request"
+          @update:request="updateRequest"
+        />
+      </v-window-item>
+      
+      <v-window-item value="raw">
+        <RequestPanelRaw 
+          v-model:request="request"
+          @update:request="updateRequest"
+        />
+      </v-window-item>
+    </v-window>
+    
+    <!-- 工具栏 -->
+    <div class="toolbar">
+      <v-btn @click="loadFromTab">Load from Tab</v-btn>
+      <v-btn @click="loadFromCurl">Load from cURL</v-btn>
+      <v-btn color="primary" @click="sendRequest">Send</v-btn>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import RequestPanelBasic from './RequestPanelBasic.vue';
+import RequestPanelRaw from './RequestPanelRaw.vue';
+
+// 响应式数据
+const activeTab = ref('basic');
+const request = ref<HackbarRequest>({
+  method: 'GET',
+  url: '',
+  headers: {},
+  body: '',
+  data: {}
+});
+
+// 方法
+const updateRequest = (newRequest: HackbarRequest) => {
+  request.value = { ...request.value, ...newRequest };
+};
+
+const loadFromTab = () => {
+  // 实现从当前标签页加载请求的逻辑
+  console.log('Loading from current tab');
+};
+
+const loadFromCurl = () => {
+  // 实现从 cURL 命令加载请求的逻辑
+  console.log('Loading from cURL command');
+};
+
+const sendRequest = () => {
+  // 实现发送请求的逻辑
+  console.log('Sending request:', request.value);
+};
+
+// 暴露给父组件的方法
+defineExpose({
+  getRequest: () => ({ ...request.value }),
+  setRequest: (newRequest: HackbarRequest) => {
+    request.value = { ...request.value, ...newRequest };
+  }
+});
+</script>
+
+<style scoped>
+.request-editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.toolbar {
+  display: flex;
+  gap: 8px;
+  padding: 16px;
+  border-top: 1px solid #e0e0e0;
 }
 </style>
 ```
@@ -269,11 +387,18 @@ pre {
 2. **保证一致性**：统一的组件外观和交互行为
 3. **易于维护**：集中管理组件逻辑，一处修改多处生效
 4. **降低耦合**：组件与业务逻辑分离
+5. **提高代码质量**：经过多次使用和测试的组件更加稳定
 
-## 实践建议
+## 最佳实践
 
-1. 识别可复用的 UI 元素并抽象为组件
-2. 提供丰富的配置选项以适应不同场景
-3. 编写清晰的文档说明组件用法
-4. 建立组件库方便团队共享
-5. 定期审查和优化组件设计
+1. **识别可复用的 UI 元素并抽象为组件**：从具体需求中提取通用模式
+2. **提供丰富的配置选项以适应不同场景**：通过 props 和 slots 提供灵活性
+3. **编写清晰的文档说明组件用法**：包括 props、events、slots 的详细说明
+4. **建立组件库方便团队共享**：将常用组件整理成库供团队使用
+5. **定期审查和优化组件设计**：根据使用反馈持续改进组件
+6. **保持组件的单一职责**：每个组件只负责一个特定功能
+7. **使用 TypeScript 提供类型安全**：通过类型定义提高组件可靠性
+
+## 总结
+
+可复用组件是 HackBar 项目中提高开发效率和代码质量的重要手段。通过设计通用、可配置的组件，我们能够减少重复代码，保持界面一致性，并提高团队协作效率。合理使用可复用组件不仅能够加快开发速度，还能提高代码的可维护性和可扩展性。
