@@ -24,7 +24,14 @@
 │   ├── custom-payloads.md
 │   └── processor-extension.md
 └── design-patterns/
-    └── concept.md
+    ├── concept.md
+    ├── creational-patterns.md
+    ├── structural-patterns.md
+    ├── singleton-pattern.md
+    ├── factory-method-pattern.md
+    ├── abstract-factory-pattern.md
+    ├── builder-pattern.md
+    └── prototype-pattern.md
 ```
 
 ## 文档列表
@@ -52,6 +59,13 @@
 
 ### 设计模式
 12. [设计模式概念](./design-patterns/concept.md) - 编程中设计模式的概念和分类
+13. [创建型设计模式](./design-patterns/creational-patterns.md) - 处理对象创建机制的设计模式详解
+14. [结构型设计模式](./design-patterns/structural-patterns.md) - 处理类或对象组合的设计模式详解
+15. [单例模式](./design-patterns/singleton-pattern.md) - 确保一个类只有一个实例的设计模式
+16. [工厂方法模式](./design-patterns/factory-method-pattern.md) - 定义创建对象接口的设计模式
+17. [抽象工厂模式](./design-patterns/abstract-factory-pattern.md) - 创建一系列相关对象的设计模式
+18. [建造者模式](./design-patterns/builder-pattern.md) - 分步骤构建复杂对象的设计模式
+19. [原型模式](./design-patterns/prototype-pattern.md) - 通过复制现有实例创建对象的设计模式
 
 ## 特点
 
