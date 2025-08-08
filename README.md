@@ -20,9 +20,11 @@
 ├── performance/
 │   ├── efficient-processing.md
 │   └── background-worker.md
-└── extensibility/
-    ├── custom-payloads.md
-    └── processor-extension.md
+├── extensibility/
+│   ├── custom-payloads.md
+│   └── processor-extension.md
+└── design-patterns/
+    └── concept.md
 ```
 
 ## 文档列表
@@ -47,6 +49,9 @@
 ### 扩展性设计
 10. [自定义载荷](./extensibility/custom-payloads.md) - 用户根据特定需求创建和管理的可重用数据片段
 11. [处理器扩展](./extensibility/processor-extension.md) - 动态加载和使用处理特定数据格式或内容类型的组件
+
+### 设计模式
+12. [设计模式概念](./design-patterns/concept.md) - 编程中设计模式的概念和分类
 
 ## 特点
 
