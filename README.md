@@ -33,7 +33,8 @@
     ├── builder-pattern.md
     ├── prototype-pattern.md
     ├── course-content.md
-    └── fundamentals-detailed.md
+    ├── fundamentals-detailed.md
+    └── uml-class-relationships.md
 ```
 
 ## 文档列表
@@ -70,6 +71,7 @@
 19. [原型模式](./design-patterns/prototype-pattern.md) - 通过复制现有实例创建对象的设计模式
 20. [设计模式课程内容](./design-patterns/course-content.md) - 全面的设计模式学习指南
 21. [设计模式基础概念详解](./design-patterns/fundamentals-detailed.md) - 详细解释设计模式的基础知识
+22. [UML类图关系详解](./design-patterns/uml-class-relationships.md) - 详细解释UML类图中的各种关系
 
 ## 特点
 
