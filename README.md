@@ -31,7 +31,8 @@
     ├── factory-method-pattern.md
     ├── abstract-factory-pattern.md
     ├── builder-pattern.md
-    └── prototype-pattern.md
+    ├── prototype-pattern.md
+    └── course-content.md
 ```
 
 ## 文档列表
@@ -66,6 +67,7 @@
 17. [抽象工厂模式](./design-patterns/abstract-factory-pattern.md) - 创建一系列相关对象的设计模式
 18. [建造者模式](./design-patterns/builder-pattern.md) - 分步骤构建复杂对象的设计模式
 19. [原型模式](./design-patterns/prototype-pattern.md) - 通过复制现有实例创建对象的设计模式
+20. [设计模式课程内容](./design-patterns/course-content.md) - 全面的设计模式学习指南
 
 ## 特点
 
